@@ -28,6 +28,10 @@ Pages exactly as-is.
 
 ## Deploying on GitHub Pages
 
+> 📋 For the full step-by-step go-live checklist (DNS records for all three
+> subdomains, HTTPS, and verification), see **[DEPLOY.md](DEPLOY.md)**.
+
+
 1. Push this repository to GitHub.
 2. Repo **Settings → Pages** → *Build and deployment* → **Source: Deploy
    from a branch** → choose `main` and `/ (root)`.

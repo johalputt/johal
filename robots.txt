@@ -1,0 +1,10 @@
+# Johal Vansh Jathere — robots.txt
+# Canonical host is jathere.johal.in. The kuldevta.johal.in and
+# devsthan.johal.in subdomains 301-redirect here, so there is no
+# duplicate content to crawl. The <link rel="canonical"> tag in the
+# page reinforces this for any crawler that still reaches a mirror.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://jathere.johal.in/sitemap.xml
