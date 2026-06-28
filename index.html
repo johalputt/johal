@@ -529,39 +529,24 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
 <body>
 
 <!-- ════════════════════════════════════════════════════════════════
-     SITE OWNER GUIDE — how to add photos & videos (NO API KEY NEEDED)
+     SITE OWNER GUIDE — the gallery & hero images
      ────────────────────────────────────────────────────────────────
-     The gallery reads the /gallery/ folder of this repository directly
-     from GitHub. Whatever you upload there shows up on the site
-     automatically — no Google account, no API key, no billing.
+     The Sacred Gallery shows a fixed set of photographs, defined in the
+     PHOTOS list inside the page script near the bottom of this file. By
+     default it shows the same two temple photos used by the hero:
+         assets/hero-1.jpg  and  assets/hero-2.jpg
 
-     1) ADD PHOTOS OR VIDEOS (the easy way, right in the browser):
-        • On GitHub, open this repo and click into the  gallery/  folder.
-        • Click  "Add file" → "Upload files".
-        • Drag in your images (.jpg .png .webp .gif) and/or
-          videos (.mp4 .webm .mov), then click "Commit changes".
-        • Within ~1 minute they appear in the Sacred Gallery, newest
-          uploads sorted by file name. Tip: prefix names to order them,
-          e.g. 01-aarti.jpg, 02-shrine.jpg — the number is hidden in
-          the caption, which is auto-made from the file name.
+     TO CHANGE THE GALLERY PHOTOS:
+        1) Upload your image(s) to the  assets/  folder on GitHub
+           (Add file → Upload files → Commit).
+        2) In this file, find  "var PHOTOS = ["  and edit the list, e.g.
+               var PHOTOS = [
+                 { src:"assets/hero-1.jpg", caption:"Johal Vansh Jathere" },
+                 { src:"assets/my-photo.jpg", caption:"Evening Aarti" }
+               ];
+        3) Commit. GitHub Pages rebuilds automatically in ~1 minute.
 
-     2) NICER CAPTIONS or YOUTUBE VIDEOS (optional):
-        • Edit gallery-manifest.json:
-              {
-                "captions": { "01-aarti.jpg": "Evening Aarti at the Jathere" },
-                "videos":   [ { "youtube": "https://youtu.be/VIDEO_ID",
-                                "caption": "Annual Puja" } ]
-              }
-
-     3) POINT THE GALLERY AT THE RIGHT REPO:
-        • In config.js set  GITHUB_REPO: "johalputt/johal"  (owner/repo).
-        • That's the only setting the gallery needs.
-
-     4) DEPLOY UPDATES (if editing files locally instead of the website):
-              git add .
-              git commit -m "Update gallery"
-              git push
-        GitHub Pages rebuilds automatically in ~1 minute.
+     No Google account, no API key, no billing — just image files.
 ════════════════════════════════════════════════════════════════ -->
 
 <header class="nav" id="nav">
@@ -849,165 +834,39 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
      read in config.js (GITHUB_REPO / GITHUB_BRANCH / GALLERY_PATH).
   ════════════════════════════════════════════════════════════ */
   var masonry = document.getElementById("masonry");
-  var apiNote = document.getElementById("apiNote");
-  var GALLERY = [];   // unified: {type:'image'|'video'|'embed', full|src|embed, caption}
+  var GALLERY = [];
 
-  var IMG_EXT = /\.(jpe?g|png|webp|gif|avif)$/i;
-  var VID_EXT = /\.(mp4|webm|mov|m4v|ogv)$/i;
+  // Photographs shown in the Sacred Gallery (the same images as the hero).
+  // To add or change pictures later, just edit this list.
+  var PHOTOS = [
+    { src:"assets/hero-1.jpg", caption:"जोहल वंश जठेरे · Johal Vansh Jathere" },
+    { src:"assets/hero-2.jpg", caption:"जठेरे स्थान · The Sacred Shrine" }
+  ];
+
   var PH_IMG  = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5'%3E%3Crect width='4' height='5' fill='%230c0e18'/%3E%3C/svg%3E";
 
   function el(tag, cls){ var x=document.createElement(tag); if(cls) x.className=cls; return x; }
 
-  // "01-evening-aarti.jpg" -> "Evening Aarti"
-  function prettyName(file){
-    return file.replace(/\.[^.]+$/,"")
-               .replace(/^\d+[\s._-]+/,"")
-               .replace(/[._-]+/g," ")
-               .replace(/\s+/g," ").trim()
-               .replace(/\b\w/g, function(c){ return c.toUpperCase(); }) || "Johal Vansh Jathere";
-  }
-
-  function makeImageCard(item, badge){
+  function makeImageCard(item){
     var card = el("div","card"); card.setAttribute("role","listitem");
-    if(badge){ var b=el("div","badge"); b.textContent=badge; card.appendChild(b); }
     var img = el("img");
     img.alt = item.caption || "Johal Vansh Jathere photo";
     img.loading = "lazy"; img.decoding = "async";
     img.src = PH_IMG;
-    img.dataset.src = item.thumb || item.full || item.src;
+    img.dataset.src = item.src;
     card.appendChild(img);
     if(item.caption){ var cap=el("div","cap"); cap.textContent=item.caption; card.appendChild(cap); }
     if(imgIO) imgIO.observe(img); else img.src = img.dataset.src;
-    var idx = GALLERY.push({type:"image", full:(item.full||item.src||item.thumb), caption:item.caption||""}) - 1;
+    var idx = GALLERY.push({type:"image", full:item.src, caption:item.caption||""}) - 1;
     card.addEventListener("click", function(){ openLightbox(idx); });
     return card;
-  }
-
-  function ytId(v){
-    if(!v) return "";
-    if(/^[\w-]{11}$/.test(v)) return v;
-    var m = v.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
-    return m ? m[1] : "";
-  }
-
-  // YouTube (or any embeddable) link from the manifest
-  function makeYouTubeCard(item){
-    var id = ytId(item.youtube || item.src || item.url);
-    var card = el("div","card video"); card.setAttribute("role","listitem");
-    var b=el("div","badge"); b.textContent="Video"; card.appendChild(b);
-    var img = el("img");
-    img.alt = item.caption || "Video"; img.loading="lazy"; img.decoding="async";
-    var thumb = item.thumb || (id ? "https://i.ytimg.com/vi/"+id+"/hqdefault.jpg" : "");
-    img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='9'%3E%3Crect width='16' height='9' fill='%230c0e18'/%3E%3C/svg%3E";
-    img.dataset.src = thumb;
-    card.appendChild(img);
-    var play=el("div","play"); play.innerHTML='<b><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></b>'; card.appendChild(play);
-    if(item.caption){ var cap=el("div","cap"); cap.textContent=item.caption; card.appendChild(cap); }
-    if(imgIO && thumb) imgIO.observe(img); else if(thumb) img.src=thumb;
-    var embed = id ? ("https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&rel=0") : (item.embed||"");
-    var idx = GALLERY.push({type:"embed", embed:embed, caption:item.caption||""}) - 1;
-    card.addEventListener("click", function(){ openLightbox(idx); });
-    return card;
-  }
-
-  // local video file (.mp4 etc.) dropped in /gallery/ — a muted,
-  // metadata-only <video> serves as the thumbnail (first frame)
-  function makeLocalVideoCard(item){
-    var src = item.src || item.full;
-    var card = el("div","card video"); card.setAttribute("role","listitem");
-    var b=el("div","badge"); b.textContent="Video"; card.appendChild(b);
-    var v = el("video");
-    v.muted=true; v.playsInline=true; v.preload="metadata"; v.tabIndex=-1;
-    v.setAttribute("aria-hidden","true");
-    v.src = src + "#t=0.5";
-    card.appendChild(v);
-    var play=el("div","play"); play.innerHTML='<b><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></b>'; card.appendChild(play);
-    if(item.caption){ var cap=el("div","cap"); cap.textContent=item.caption; card.appendChild(cap); }
-    var idx = GALLERY.push({type:"video", src:src, caption:item.caption||""}) - 1;
-    card.addEventListener("click", function(){ openLightbox(idx); });
-    return card;
-  }
-
-  function placeholders(msg){
-    var glyphs=["ॐ","🪔","🙏","🌸"];
-    var labels=["Aarti & Lamps","The Shrine","Clan Gathering","Sacred Offerings"];
-    for(var i=0;i<labels.length;i++){
-      var c = el("div","card ph in");
-      c.innerHTML = '<div class="glyph dev">'+glyphs[i]+'</div><p>'+labels[i]+'</p><div class="mono">Coming soon</div>';
-      masonry.appendChild(c);
-    }
-    if(msg && apiNote){ apiNote.innerHTML = msg; }
-  }
-
-  function appendCard(node){
-    masonry.appendChild(node);
-    if(cardIO) cardIO.observe(node); else node.classList.add("in");
-  }
-
-  /* optional captions/extra-links file (no API needed) */
-  function loadManifest(){
-    return fetch("gallery-manifest.json", {cache:"no-cache"})
-      .then(function(r){ return r.ok ? r.json() : null; })
-      .catch(function(){ return null; });
-  }
-
-  /* read the gallery folder straight from GitHub — NO API key.
-     Public repos allow 60 requests/hour/IP unauthenticated; we cache
-     the result in sessionStorage for 15 min so revisits don't re-fetch. */
-  function loadGitHubFolder(){
-    var repo = CFG.GITHUB_REPO || "";
-    var branch = CFG.GITHUB_BRANCH || "main";
-    var path = (CFG.GALLERY_PATH || "gallery").replace(/^\/+|\/+$/g,"");
-    if(!repo || /YOUR_/.test(repo) || repo.indexOf("/") < 0) return Promise.resolve(null);
-    var key = "jathere_gal_" + repo + "_" + branch + "_" + path;
-    try{
-      var c = JSON.parse(sessionStorage.getItem(key) || "null");
-      if(c && (Date.now()-c.t) < 900000) return Promise.resolve(c.items);
-    }catch(e){}
-    var api = "https://api.github.com/repos/"+repo+"/contents/"+path+"?ref="+encodeURIComponent(branch);
-    return fetch(api, {headers:{Accept:"application/vnd.github+json"}})
-      .then(function(r){ return r.ok ? r.json() : null; })
-      .then(function(list){
-        if(!Array.isArray(list)) return null;
-        var items = list
-          .filter(function(f){ return f.type==="file" && (IMG_EXT.test(f.name) || VID_EXT.test(f.name)); })
-          .sort(function(a,b){ return a.name.localeCompare(b.name, undefined, {numeric:true}); })
-          .map(function(f){
-            var raw = f.download_url || ("https://raw.githubusercontent.com/"+repo+"/"+branch+"/"+path+"/"+encodeURIComponent(f.name));
-            return { name:f.name, url:raw, kind: VID_EXT.test(f.name) ? "video" : "image" };
-          });
-        try{ sessionStorage.setItem(key, JSON.stringify({t:Date.now(), items:items})); }catch(e){}
-        return items;
-      })
-      .catch(function(){ return null; });
   }
 
   function buildGallery(){
-    Promise.all([loadGitHubFolder(), loadManifest()]).then(function(res){
-      var folder = res[0];                 // array, or null if not configured/unreachable
-      var manifest = res[1] || {};
-      var capMap = manifest.captions || {};
-      var added = 0;
-
-      // 1) everything auto-detected in the /gallery/ folder
-      if(folder){
-        folder.forEach(function(f){
-          var caption = capMap[f.name] || prettyName(f.name);
-          if(f.kind === "video") appendCard(makeLocalVideoCard({src:f.url, caption:caption}));
-          else appendCard(makeImageCard({full:f.url, thumb:f.url, caption:caption}, "Photo"));
-          added++;
-        });
-      }
-      // 2) any extra images explicitly listed (e.g. remote URLs)
-      (manifest.images||[]).forEach(function(it){ appendCard(makeImageCard(it,"Photo")); added++; });
-      // 3) YouTube / embed links listed in the manifest
-      (manifest.videos||[]).forEach(function(it){ appendCard(makeYouTubeCard(it)); added++; });
-
-      if(added === 0){
-        placeholders('More moments from the Jathere will be added here soon.');
-      } else if(apiNote){
-        apiNote.innerHTML = '<b>'+added+'</b> moment'+(added>1?'s':'')+' from the sacred ground.';
-      }
+    PHOTOS.forEach(function(it){
+      var node = makeImageCard(it);
+      masonry.appendChild(node);
+      if(cardIO) cardIO.observe(node); else node.classList.add("in");
     });
   }
   if(masonry) buildGallery();
