@@ -1,5 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Johal Vansh Jathere flame">
-  <rect width="512" height="512" rx="112" fill="#07080f"/>
-  <circle cx="256" cy="362" r="36" fill="#D4A017"/>
-  <path d="M256 72c20 61-31 87-31 138 0 31 20 51 20 51s36-26 26-82c41 31 67 72 67 123 0 72-56 123-118 123S102 506 102 363c0-46 26-82 56-113-5 36 5 56 20 67 0 0-15-46 10-97 21-41 68-61 68-148Z" fill="#FF6B00"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Johal Vansh Jathere — ॐ">
+  <defs>
+    <radialGradient id="g" cx="30%" cy="20%" r="100%">
+      <stop offset="0" stop-color="#FF6B00"/>
+      <stop offset="1" stop-color="#7a3300"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#g)"/>
+  <text x="256" y="256" dy=".34em" text-anchor="middle"
+        font-family="'Tiro Devanagari Hindi','Noto Sans Devanagari',system-ui,sans-serif"
+        font-size="320" fill="#F5F0E8">ॐ</text>
 </svg>
