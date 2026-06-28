@@ -1,8 +1,12 @@
 name: Deploy to GitHub Pages
 
 # Publishes the static site whenever main changes.
-# One-time setup: Repo Settings -> Pages -> "Build and deployment" ->
-# Source: "GitHub Actions". The custom domain (CNAME) is preserved.
+#
+# Setup: Repo Settings -> Pages -> "Build and deployment" -> Source:
+# "GitHub Actions". The `enablement: true` below also lets this workflow
+# turn Pages on automatically the first time it runs, so a fresh repo
+# does not fail with "Get Pages site failed / Not Found".
+# The custom domain (CNAME file) is preserved.
 
 on:
   push:
@@ -31,6 +35,10 @@ jobs:
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          # Enable GitHub Pages automatically if it isn't already,
+          # so the first run on a new repo doesn't fail.
+          enablement: true
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
