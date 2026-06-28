@@ -312,6 +312,18 @@ header.nav.scrolled{
 }
 .hero-tags span.dev{font-family:"Tiro Devanagari Hindi",serif;text-transform:none;letter-spacing:.04em;color:var(--cream)}
 
+/* hero jaikara — big bold devotional cry */
+.hero-jaikara{margin-top:26px;opacity:0;animation:rise-in 1s var(--ease) .5s forwards}
+.hero-jaikara .hi{
+  display:block;font-family:"Tiro Devanagari Hindi",serif;font-weight:700;
+  font-size:clamp(26px,6.4vw,56px);line-height:1.12;color:var(--saffron);
+  text-shadow:0 0 26px rgba(255,107,0,.4);
+}
+.hero-jaikara .en{
+  display:block;margin-top:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  font-size:clamp(14px,3vw,24px);color:var(--gold);
+}
+
 .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px;opacity:0;animation:rise-in 1s var(--ease) .64s forwards}
 .btn{
   display:inline-flex;align-items:center;gap:10px;
@@ -563,7 +575,7 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
   .beam,.particles i,footer .om{animation:none!important}
   .hero-photo{animation:none!important;transform:none!important}
   .hero-photo.p1{opacity:1!important}.hero-photo.p2{opacity:0!important}
-  .invocation,.hero h1 .hi,.hero h1 .en,.hero-tags,.hero .sub,.cta-row,.stats,.scroll-cue{opacity:1!important;animation:none!important}
+  .invocation,.hero h1 .hi,.hero h1 .en,.hero-tags,.hero-jaikara,.hero .sub,.cta-row,.stats,.scroll-cue{opacity:1!important;animation:none!important}
 }
 </style>
 </head>
@@ -626,6 +638,10 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
       <span class="dev">जट वंश</span>
       <span>Jat Clan</span>
       <span>Gotra Agnash</span>
+    </div>
+    <div class="hero-jaikara">
+      <span class="hi dev">॥ बाबा जामू शहीद दी जय ॥</span>
+      <span class="en">Baba Jamu Shaheed Di Jai</span>
     </div>
     <p class="sub">Ancestral Shrine of the Johal Clan · <b>Jammu &amp; Kashmir</b><br>
        The sacred <b>Kul Devta</b> seat where every Johal returns to bow before the elders who came first.</p>
