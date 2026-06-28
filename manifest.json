@@ -1,0 +1,22 @@
+{
+  "name": "Johal Vansh Jathere",
+  "short_name": "Jathere",
+  "description": "The ancestral Kul Devta shrine of the Johal clan, Bhojpur, Ranbir Singh Pura, Jammu & Kashmir.",
+  "lang": "hi-IN",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07080f",
+  "theme_color": "#07080f",
+  "categories": ["lifestyle", "travel", "education"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}
