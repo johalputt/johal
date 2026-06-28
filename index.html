@@ -303,6 +303,15 @@ header.nav.scrolled{
 .hero .sub b{color:var(--cream);font-weight:600}
 @keyframes rise-in{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 
+/* hero lineage pills — Jat clan / Agnash gotra identity */
+.hero-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px;opacity:0;animation:rise-in 1s var(--ease) .44s forwards}
+.hero-tags span{
+  font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);border:1px solid rgba(212,160,23,.4);border-radius:999px;padding:7px 14px;
+  background:rgba(212,160,23,.06);
+}
+.hero-tags span.dev{font-family:"Tiro Devanagari Hindi",serif;text-transform:none;letter-spacing:.04em;color:var(--cream)}
+
 .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px;opacity:0;animation:rise-in 1s var(--ease) .64s forwards}
 .btn{
   display:inline-flex;align-items:center;gap:10px;
@@ -522,7 +531,7 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
   .beam,.particles i,footer .om{animation:none!important}
   .hero-photo{animation:none!important;transform:none!important}
   .hero-photo.p1{opacity:1!important}.hero-photo.p2{opacity:0!important}
-  .invocation,.hero h1 .hi,.hero h1 .en,.hero .sub,.cta-row,.stats,.scroll-cue{opacity:1!important;animation:none!important}
+  .invocation,.hero h1 .hi,.hero h1 .en,.hero-tags,.hero .sub,.cta-row,.stats,.scroll-cue{opacity:1!important;animation:none!important}
 }
 </style>
 </head>
@@ -579,6 +588,11 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
       <span class="hi dev">जोहल वंश जठेरे</span>
       <span class="en">Johal Vansh Jathere</span>
     </h1>
+    <div class="hero-tags">
+      <span class="dev">जट वंश</span>
+      <span>Jat Clan</span>
+      <span>Gotra Agnash</span>
+    </div>
     <p class="sub">Ancestral Shrine of the Johal Clan · <b>Jammu &amp; Kashmir</b><br>
        The sacred <b>Kul Devta</b> seat where every Johal returns to bow before the elders who came first.</p>
 
