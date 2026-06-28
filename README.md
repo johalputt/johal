@@ -18,10 +18,11 @@ Pages exactly as-is.
 | File | Purpose |
 |------|---------|
 | `index.html` | The entire website — all HTML, CSS and JS inline. |
-| `config.js` | The **only** file to edit to enable Google Maps photos (API key + Place ID). |
-| `gallery-manifest.json` | List your own photos & videos here. |
-| `gallery/` | Drop image files here. |
-| `manifest.json` + `icon.svg` | PWA / installable app metadata. |
+| `config.js` | One small file: which GitHub repo/branch the gallery reads. |
+| `gallery/` | **Upload your photos & videos here** — they appear automatically. |
+| `gallery-manifest.json` | *Optional* — nicer captions + YouTube links. |
+| `assets/` | Social-share images (`og-cover.jpg`, `og-square.jpg`). |
+| `manifest.json` + `icon.svg` + `icons/` | PWA / installable app metadata. |
 | `CNAME` | Custom domain for GitHub Pages. |
 
 ---
@@ -44,37 +45,36 @@ Pages exactly as-is.
 
 ## Updating the Sacred Gallery
 
-The gallery has **three** sources and falls back gracefully:
+**No Google account or API key is needed.** The gallery reads the
+`gallery/` folder of this repository directly from GitHub — whatever you
+upload there appears on the site automatically.
 
-### A. Add your own photos (no API key needed)
-1. Put images in the `gallery/` folder (e.g. `gallery/aarti.jpg`).
-2. List them in `gallery-manifest.json`:
-   ```json
-   "images": [
-     { "src": "gallery/aarti.jpg", "caption": "Evening Aarti" }
-   ]
-   ```
-3. Publish:
-   ```bash
-   git add .
-   git commit -m "Update gallery"
-   git push
-   ```
+### A. Add photos & videos (easiest — in the browser)
+1. On GitHub, open the **`gallery/`** folder → **Add file → Upload files**.
+2. Drag in images (`.jpg` `.png` `.webp` `.gif`) and/or videos
+   (`.mp4` `.webm` `.mov`), then **Commit changes**.
+3. They appear within ~1 minute, sorted by file name. Prefix names to
+   order them (`01-aarti.jpg`, `02-shrine.jpg` …).
 
-### B. Add videos
+Captions are auto-generated from the file name. Local videos play inline
+in the lightbox.
+
+### B. Nicer captions / YouTube videos (optional)
+Edit `gallery-manifest.json`:
 ```json
-"videos": [
-  { "youtube": "https://youtu.be/VIDEO_ID", "caption": "Annual Puja" }
-]
+{
+  "captions": { "01-aarti.jpg": "Evening Aarti at the Jathere" },
+  "videos":   [ { "youtube": "https://youtu.be/VIDEO_ID", "caption": "Annual Puja" } ]
+}
 ```
 
-### C. Auto-load from Google Maps (optional)
-Add a free **Google Places API key** and the shrine's **Place ID** in
-`config.js`. Photos uploaded to the Google Maps listing then appear
-automatically. Full step-by-step instructions are inside `config.js`.
+### C. Point the gallery at your repo
+In `config.js`, set `GITHUB_REPO` to `"owner/repo"` (e.g.
+`"johalputt/johal"`). That's the only required setting.
 
-> If no key and no local photos are present, the gallery shows tasteful
-> placeholder cards explaining how to add content.
+> If the folder is empty, the gallery shows tasteful placeholder cards
+> explaining how to add content. Photo loads are cached for 15 minutes
+> per visitor to stay well within GitHub's free public rate limit.
 
 ---
 

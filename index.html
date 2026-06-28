@@ -22,7 +22,7 @@
 <meta property="og:description" content="The ancestral Kul Devta shrine of the Johal clan · Bhojpur, Ranbir Singh Pura, Jammu & Kashmir." />
 <meta property="og:url" content="https://jathere.johal.in" />
 <meta property="og:locale" content="hi_IN" />
-<meta property="og:image" content="https://jathere.johal.in/gallery/og-cover.jpg" />
+<meta property="og:image" content="https://jathere.johal.in/assets/og-cover.jpg" />
 
 <meta name="og:image:alt" content="Johal Vansh Jathere — जोहल वंश जठेरे" />
 <meta property="og:image:width" content="2400" />
@@ -32,7 +32,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="जोहल वंश जठेरे · Johal Vansh Jathere" />
 <meta name="twitter:description" content="The ancestral Kul Devta shrine of the Johal clan · Jammu & Kashmir." />
-<meta name="twitter:image" content="https://jathere.johal.in/gallery/og-cover.jpg" />
+<meta name="twitter:image" content="https://jathere.johal.in/assets/og-cover.jpg" />
 
 <!-- Indexing: this canonical host (jathere.johal.in) is the indexable one;
      kuldevta. and devsthan. 301-redirect here, so no duplicate content. -->
@@ -60,7 +60,7 @@
   "alternateName": "जोहल वंश जठेरे",
   "description": "The ancestral Kul Devta shrine of the Johal clan, in the Jathere tradition.",
   "url": "https://jathere.johal.in",
-  "image": "https://jathere.johal.in/gallery/og-cover.jpg",
+  "image": "https://jathere.johal.in/assets/og-cover.jpg",
   "email": "jathere@johal.in",
   "telephone": "+91-88032-33656",
   "address": {
@@ -360,8 +360,9 @@ header.nav.scrolled{
 }
 .card.in{opacity:1;transform:none}
 .card:hover{border-color:rgba(212,160,23,.5)}
-.card img{width:100%;height:auto;display:block;transition:transform .6s var(--ease);background:var(--charcoal-2)}
-.card:hover img{transform:scale(1.05)}
+.card img,.card video{width:100%;height:auto;display:block;transition:transform .6s var(--ease);background:var(--charcoal-2)}
+.card:hover img,.card:hover video{transform:scale(1.05)}
+.card.video video{aspect-ratio:4/3;object-fit:cover;pointer-events:none}
 .card .cap{
   position:absolute;inset:auto 0 0 0;padding:30px 16px 14px;
   background:linear-gradient(transparent,rgba(7,8,15,.85));
@@ -400,7 +401,7 @@ header.nav.scrolled{
 }
 .lb.open{display:grid;opacity:1}
 .lb-stage{max-width:92vw;max-height:86vh;position:relative}
-.lb-stage img,.lb-stage iframe{
+.lb-stage img,.lb-stage video,.lb-stage iframe{
   max-width:92vw;max-height:86vh;border-radius:14px;display:block;
   border:1px solid var(--ink-22);box-shadow:0 40px 120px -30px #000;
 }
@@ -498,26 +499,35 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
 <body>
 
 <!-- ════════════════════════════════════════════════════════════════
-     SITE OWNER GUIDE — please read (HTML comments are not shown on page)
+     SITE OWNER GUIDE — how to add photos & videos (NO API KEY NEEDED)
      ────────────────────────────────────────────────────────────────
-     1) GOOGLE PLACES API KEY (free tier is plenty):
-        • Go to https://console.cloud.google.com/ → create a project.
-        • Enable "Places API". Then APIs & Services → Credentials →
-          "Create credentials" → API key. Restrict it to your domain
-          (jathere.johal.in) and to the Places API for safety.
-        • Open config.js (same folder) and paste it:
-              window.JATHERE_CONFIG.GOOGLE_API_KEY = "YOUR_KEY_HERE";
-        • Photos that people add to the Google Maps listing of the
-          shrine will then appear automatically in the Sacred Gallery.
+     The gallery reads the /gallery/ folder of this repository directly
+     from GitHub. Whatever you upload there shows up on the site
+     automatically — no Google account, no API key, no billing.
 
-     2) ADD YOUR OWN PHOTOS (no API key needed):
-        • Put image files inside the /gallery/ folder.
-        • List them in gallery-manifest.json, e.g.
-              { "images":[ {"src":"gallery/aarti.jpg","caption":"Evening Aarti"} ],
-                "videos":[ {"youtube":"VIDEO_ID","caption":"Annual Puja"} ] }
-        • They appear instantly in the grid, lazy-loaded.
+     1) ADD PHOTOS OR VIDEOS (the easy way, right in the browser):
+        • On GitHub, open this repo and click into the  gallery/  folder.
+        • Click  "Add file" → "Upload files".
+        • Drag in your images (.jpg .png .webp .gif) and/or
+          videos (.mp4 .webm .mov), then click "Commit changes".
+        • Within ~1 minute they appear in the Sacred Gallery, newest
+          uploads sorted by file name. Tip: prefix names to order them,
+          e.g. 01-aarti.jpg, 02-shrine.jpg — the number is hidden in
+          the caption, which is auto-made from the file name.
 
-     3) DEPLOY UPDATES TO GITHUB PAGES:
+     2) NICER CAPTIONS or YOUTUBE VIDEOS (optional):
+        • Edit gallery-manifest.json:
+              {
+                "captions": { "01-aarti.jpg": "Evening Aarti at the Jathere" },
+                "videos":   [ { "youtube": "https://youtu.be/VIDEO_ID",
+                                "caption": "Annual Puja" } ]
+              }
+
+     3) POINT THE GALLERY AT THE RIGHT REPO:
+        • In config.js set  GITHUB_REPO: "johalputt/johal"  (owner/repo).
+        • That's the only setting the gallery needs.
+
+     4) DEPLOY UPDATES (if editing files locally instead of the website):
               git add .
               git commit -m "Update gallery"
               git push
@@ -609,9 +619,8 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
         <h2 class="title">Glimpses of the sacred ground.</h2>
       </div>
       <div class="api-note" id="apiNote">
-        Photos load automatically from the Google Maps listing once an
-        <b>API key</b> is added in <b>config.js</b>, alongside any images
-        you place in <b>/gallery/</b>.
+        Photos &amp; videos load automatically from the <b>/gallery/</b>
+        folder — just upload files on GitHub. No API key needed.
       </div>
     </div>
     <div class="masonry" id="masonry" role="list" aria-live="polite">
@@ -792,13 +801,37 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
   }, {threshold:.05}) : null;
 
   /* ════════════════════════════════════════════════════════════
-     GALLERY ENGINE
+     GALLERY ENGINE  —  NO API KEY REQUIRED.
+     ------------------------------------------------------------
+     Photos & videos are read straight from this repo's /gallery/
+     folder using GitHub's free public Contents API. Just upload a
+     file to that folder (GitHub → Add file → Upload files) and it
+     appears here automatically:
+       • images  (.jpg .jpeg .png .webp .gif .avif)  -> photo cards
+       • videos  (.mp4 .webm .mov .m4v .ogv)         -> playable cards
+       • YouTube links can also be listed in gallery-manifest.json
+     Captions are made from the file name; override them in the
+     manifest's "captions" map if you like. Configure which repo to
+     read in config.js (GITHUB_REPO / GITHUB_BRANCH / GALLERY_PATH).
   ════════════════════════════════════════════════════════════ */
   var masonry = document.getElementById("masonry");
   var apiNote = document.getElementById("apiNote");
-  var GALLERY = [];   // unified list: {type:'image'|'video', full, thumb, caption, src/embed}
+  var GALLERY = [];   // unified: {type:'image'|'video'|'embed', full|src|embed, caption}
+
+  var IMG_EXT = /\.(jpe?g|png|webp|gif|avif)$/i;
+  var VID_EXT = /\.(mp4|webm|mov|m4v|ogv)$/i;
+  var PH_IMG  = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5'%3E%3Crect width='4' height='5' fill='%230c0e18'/%3E%3C/svg%3E";
 
   function el(tag, cls){ var x=document.createElement(tag); if(cls) x.className=cls; return x; }
+
+  // "01-evening-aarti.jpg" -> "Evening Aarti"
+  function prettyName(file){
+    return file.replace(/\.[^.]+$/,"")
+               .replace(/^\d+[\s._-]+/,"")
+               .replace(/[._-]+/g," ")
+               .replace(/\s+/g," ").trim()
+               .replace(/\b\w/g, function(c){ return c.toUpperCase(); }) || "Johal Vansh Jathere";
+  }
 
   function makeImageCard(item, badge){
     var card = el("div","card"); card.setAttribute("role","listitem");
@@ -806,8 +839,7 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
     var img = el("img");
     img.alt = item.caption || "Johal Vansh Jathere photo";
     img.loading = "lazy"; img.decoding = "async";
-    // tiny inline placeholder until lazy-load swaps in
-    img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5'%3E%3Crect width='4' height='5' fill='%230c0e18'/%3E%3C/svg%3E";
+    img.src = PH_IMG;
     img.dataset.src = item.thumb || item.full || item.src;
     card.appendChild(img);
     if(item.caption){ var cap=el("div","cap"); cap.textContent=item.caption; card.appendChild(cap); }
@@ -820,12 +852,13 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
   function ytId(v){
     if(!v) return "";
     if(/^[\w-]{11}$/.test(v)) return v;
-    var m = v.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
+    var m = v.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
     return m ? m[1] : "";
   }
 
-  function makeVideoCard(item){
-    var id = ytId(item.youtube || item.src);
+  // YouTube (or any embeddable) link from the manifest
+  function makeYouTubeCard(item){
+    var id = ytId(item.youtube || item.src || item.url);
     var card = el("div","card video"); card.setAttribute("role","listitem");
     var b=el("div","badge"); b.textContent="Video"; card.appendChild(b);
     var img = el("img");
@@ -838,7 +871,25 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
     if(item.caption){ var cap=el("div","cap"); cap.textContent=item.caption; card.appendChild(cap); }
     if(imgIO && thumb) imgIO.observe(img); else if(thumb) img.src=thumb;
     var embed = id ? ("https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&rel=0") : (item.embed||"");
-    var idx = GALLERY.push({type:"video", embed:embed, caption:item.caption||""}) - 1;
+    var idx = GALLERY.push({type:"embed", embed:embed, caption:item.caption||""}) - 1;
+    card.addEventListener("click", function(){ openLightbox(idx); });
+    return card;
+  }
+
+  // local video file (.mp4 etc.) dropped in /gallery/ — a muted,
+  // metadata-only <video> serves as the thumbnail (first frame)
+  function makeLocalVideoCard(item){
+    var src = item.src || item.full;
+    var card = el("div","card video"); card.setAttribute("role","listitem");
+    var b=el("div","badge"); b.textContent="Video"; card.appendChild(b);
+    var v = el("video");
+    v.muted=true; v.playsInline=true; v.preload="metadata"; v.tabIndex=-1;
+    v.setAttribute("aria-hidden","true");
+    v.src = src + "#t=0.5";
+    card.appendChild(v);
+    var play=el("div","play"); play.innerHTML='<b><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></b>'; card.appendChild(play);
+    if(item.caption){ var cap=el("div","cap"); cap.textContent=item.caption; card.appendChild(cap); }
+    var idx = GALLERY.push({type:"video", src:src, caption:item.caption||""}) - 1;
     card.addEventListener("click", function(){ openLightbox(idx); });
     return card;
   }
@@ -864,54 +915,73 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
     if(cardIO) cardIO.observe(node); else node.classList.add("in");
   }
 
-  /* 1) local manifest */
+  /* optional captions/extra-links file (no API needed) */
   function loadManifest(){
     return fetch("gallery-manifest.json", {cache:"no-cache"})
       .then(function(r){ return r.ok ? r.json() : null; })
       .catch(function(){ return null; });
   }
 
-  /* 2) Google Places photos (needs API key + place id) */
-  function loadPlacePhotos(){
-    var key = CFG.GOOGLE_API_KEY, pid = CFG.PLACE_ID;
-    if(!key || /YOUR_/.test(key) || !pid || /YOUR_/.test(pid)) return Promise.resolve(null);
-    /* Place Details → photo_reference list (requires a billing-enabled key) */
-    var url = "https://maps.googleapis.com/maps/api/place/details/json?place_id="+encodeURIComponent(pid)+
-              "&fields=photos&key="+encodeURIComponent(key);
-    return fetch(url).then(function(r){return r.json();}).then(function(d){
-      if(!d || !d.result || !d.result.photos) return null;
-      return d.result.photos.slice(0,12).map(function(p){
-        var base = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=";
-        return {
-          thumb: base+"600&photo_reference="+p.photo_reference+"&key="+key,
-          full:  base+"1600&photo_reference="+p.photo_reference+"&key="+key,
-          caption:"Johal Vansh Jathere"
-        };
-      });
-    }).catch(function(){ return null; });
+  /* read the gallery folder straight from GitHub — NO API key.
+     Public repos allow 60 requests/hour/IP unauthenticated; we cache
+     the result in sessionStorage for 15 min so revisits don't re-fetch. */
+  function loadGitHubFolder(){
+    var repo = CFG.GITHUB_REPO || "";
+    var branch = CFG.GITHUB_BRANCH || "main";
+    var path = (CFG.GALLERY_PATH || "gallery").replace(/^\/+|\/+$/g,"");
+    if(!repo || /YOUR_/.test(repo) || repo.indexOf("/") < 0) return Promise.resolve(null);
+    var key = "jathere_gal_" + repo + "_" + branch + "_" + path;
+    try{
+      var c = JSON.parse(sessionStorage.getItem(key) || "null");
+      if(c && (Date.now()-c.t) < 900000) return Promise.resolve(c.items);
+    }catch(e){}
+    var api = "https://api.github.com/repos/"+repo+"/contents/"+path+"?ref="+encodeURIComponent(branch);
+    return fetch(api, {headers:{Accept:"application/vnd.github+json"}})
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(list){
+        if(!Array.isArray(list)) return null;
+        var items = list
+          .filter(function(f){ return f.type==="file" && (IMG_EXT.test(f.name) || VID_EXT.test(f.name)); })
+          .sort(function(a,b){ return a.name.localeCompare(b.name, undefined, {numeric:true}); })
+          .map(function(f){
+            var raw = f.download_url || ("https://raw.githubusercontent.com/"+repo+"/"+branch+"/"+path+"/"+encodeURIComponent(f.name));
+            return { name:f.name, url:raw, kind: VID_EXT.test(f.name) ? "video" : "image" };
+          });
+        try{ sessionStorage.setItem(key, JSON.stringify({t:Date.now(), items:items})); }catch(e){}
+        return items;
+      })
+      .catch(function(){ return null; });
   }
 
   function buildGallery(){
-    Promise.all([loadManifest(), loadPlacePhotos()]).then(function(res){
-      var manifest = res[0] || {};
-      var place = res[1];
+    Promise.all([loadGitHubFolder(), loadManifest()]).then(function(res){
+      var folder = res[0];                 // array, or null if not configured/unreachable
+      var manifest = res[1] || {};
+      var capMap = manifest.captions || {};
       var added = 0;
 
-      // local images first (owner-curated)
+      // 1) everything auto-detected in the /gallery/ folder
+      if(folder){
+        folder.forEach(function(f){
+          var caption = capMap[f.name] || prettyName(f.name);
+          if(f.kind === "video") appendCard(makeLocalVideoCard({src:f.url, caption:caption}));
+          else appendCard(makeImageCard({full:f.url, thumb:f.url, caption:caption}, "Photo"));
+          added++;
+        });
+      }
+      // 2) any extra images explicitly listed (e.g. remote URLs)
       (manifest.images||[]).forEach(function(it){ appendCard(makeImageCard(it,"Photo")); added++; });
-      // local/manifest videos
-      (manifest.videos||[]).forEach(function(it){ appendCard(makeVideoCard(it)); added++; });
-      // google places photos
-      if(place){ place.forEach(function(it){ appendCard(makeImageCard(it,"Maps")); added++; }); }
+      // 3) YouTube / embed links listed in the manifest
+      (manifest.videos||[]).forEach(function(it){ appendCard(makeYouTubeCard(it)); added++; });
 
       if(added === 0){
-        var key = CFG.GOOGLE_API_KEY;
-        var msg = (!key || /YOUR_/.test(key))
-          ? 'No photos yet. <b>Add your Google API key in config.js</b> to auto-load Maps photos, or drop images into <b>/gallery/</b> and list them in <b>gallery-manifest.json</b>.'
-          : 'No photos found yet. Add images to <b>/gallery/</b> (and gallery-manifest.json), or upload photos to the Google Maps listing.';
+        var notConfigured = (!CFG.GITHUB_REPO || /YOUR_/.test(CFG.GITHUB_REPO));
+        var msg = notConfigured
+          ? 'Set <b>GITHUB_REPO</b> in <b>config.js</b> (e.g. "johalputt/johal"), then upload photos/videos to the <b>/gallery/</b> folder — they show here automatically. No API key needed.'
+          : 'No photos yet. On GitHub, open the <b>/gallery/</b> folder → <b>Add file → Upload files</b> → commit. Images &amp; videos appear here automatically — no API key needed.';
         placeholders(msg);
       } else if(apiNote){
-        apiNote.innerHTML = '<b>'+added+'</b> item'+(added>1?'s':'')+' loaded. New photos appear automatically as they are added to Google Maps or <b>/gallery/</b>.';
+        apiNote.innerHTML = '<b>'+added+'</b> item'+(added>1?'s':'')+' loaded · new uploads to the <b>/gallery/</b> folder appear here automatically.';
       }
     });
   }
@@ -926,11 +996,16 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
   function render(i){
     var item = GALLERY[i]; if(!item) return;
     lbContent.innerHTML = "";
-    if(item.type==="video" && item.embed){
+    if(item.type==="embed" && item.embed){
       var f=document.createElement("iframe");
       f.src=item.embed; f.allow="autoplay; encrypted-media; picture-in-picture";
       f.setAttribute("allowfullscreen",""); f.title=item.caption||"Video";
       lbContent.appendChild(f);
+    } else if(item.type==="video" && item.src){
+      var v=document.createElement("video");
+      v.src=item.src; v.controls=true; v.autoplay=true; v.playsInline=true;
+      v.setAttribute("controlslist","nodownload");
+      lbContent.appendChild(v);
     } else {
       var img=document.createElement("img");
       img.src=item.full; img.alt=item.caption||"Photo";
