@@ -619,8 +619,7 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
         <h2 class="title">Glimpses of the sacred ground.</h2>
       </div>
       <div class="api-note" id="apiNote">
-        Photos &amp; videos load automatically from the <b>/gallery/</b>
-        folder — just upload files on GitHub. No API key needed.
+        Moments of devotion from the sacred ground · <span class="dev">श्रद्धा के क्षण</span>
       </div>
     </div>
     <div class="masonry" id="masonry" role="list" aria-live="polite">
@@ -896,15 +895,10 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
 
   function placeholders(msg){
     var glyphs=["ॐ","🪔","🙏","🌸"];
-    var labels=[
-      {t:"Aarti & Lamps",d:"Add aarti.jpg"},
-      {t:"The Shrine",d:"Add shrine.jpg"},
-      {t:"Clan Gathering",d:"Add gathering.jpg"},
-      {t:"Offerings",d:"Add prasad.jpg"}
-    ];
+    var labels=["Aarti & Lamps","The Shrine","Clan Gathering","Sacred Offerings"];
     for(var i=0;i<labels.length;i++){
       var c = el("div","card ph in");
-      c.innerHTML = '<div class="glyph dev">'+glyphs[i]+'</div><p>'+labels[i].t+'</p><div class="mono">'+labels[i].d+' → /gallery/</div>';
+      c.innerHTML = '<div class="glyph dev">'+glyphs[i]+'</div><p>'+labels[i]+'</p><div class="mono">Coming soon</div>';
       masonry.appendChild(c);
     }
     if(msg && apiNote){ apiNote.innerHTML = msg; }
@@ -975,13 +969,9 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
       (manifest.videos||[]).forEach(function(it){ appendCard(makeYouTubeCard(it)); added++; });
 
       if(added === 0){
-        var notConfigured = (!CFG.GITHUB_REPO || /YOUR_/.test(CFG.GITHUB_REPO));
-        var msg = notConfigured
-          ? 'Set <b>GITHUB_REPO</b> in <b>config.js</b> (e.g. "johalputt/johal"), then upload photos/videos to the <b>/gallery/</b> folder — they show here automatically. No API key needed.'
-          : 'No photos yet. On GitHub, open the <b>/gallery/</b> folder → <b>Add file → Upload files</b> → commit. Images &amp; videos appear here automatically — no API key needed.';
-        placeholders(msg);
+        placeholders('More moments from the Jathere will be added here soon.');
       } else if(apiNote){
-        apiNote.innerHTML = '<b>'+added+'</b> item'+(added>1?'s':'')+' loaded · new uploads to the <b>/gallery/</b> folder appear here automatically.';
+        apiNote.innerHTML = '<b>'+added+'</b> moment'+(added>1?'s':'')+' from the sacred ground.';
       }
     });
   }
