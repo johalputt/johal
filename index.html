@@ -523,6 +523,38 @@ footer .copy{margin-top:26px;color:var(--ink-45);font-size:12.5px;letter-spacing
 footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--saffron);margin-bottom:18px;display:inline-block;animation:glow 4s ease-in-out infinite}
 @keyframes glow{0%,100%{text-shadow:0 0 12px rgba(255,107,0,.3)}50%{text-shadow:0 0 26px rgba(255,107,0,.7)}}
 
+/* ── Devotional: invocation, aarti & customs ──────────────── */
+.verses{display:grid;gap:16px;margin-top:44px;max-width:820px}
+@media(min-width:760px){.verses{grid-template-columns:1fr 1fr}.verses .mantra.full{grid-column:1/-1}}
+.mantra{
+  border:1px solid var(--line);border-radius:18px;padding:26px 24px;text-align:center;
+  background:linear-gradient(180deg,var(--ink-06),transparent);
+}
+.mantra .om{font-family:"Tiro Devanagari Hindi",serif;color:var(--saffron);font-size:26px;line-height:1.25;margin-bottom:12px}
+.mantra p{font-family:"Tiro Devanagari Hindi",serif;font-size:clamp(16px,2.2vw,20px);line-height:1.95;color:var(--cream)}
+.mantra .jai{color:var(--gold);display:inline-block;margin:6px 0}
+
+.aarti-h{font-family:"Tiro Devanagari Hindi",serif;color:var(--saffron);text-align:center;font-size:clamp(26px,5vw,40px);margin-top:64px}
+.aarti{max-width:680px;margin:22px auto 0;text-align:center}
+.aarti .couplet{font-family:"Tiro Devanagari Hindi",serif;font-size:clamp(16px,2.3vw,21px);line-height:2;color:var(--cream);padding:14px 0;border-bottom:1px solid var(--ink-06)}
+.aarti .couplet:last-child{border-bottom:0}
+
+.reet-intro{color:var(--ink-65);max-width:64ch;margin-top:22px}
+.reet{display:grid;gap:14px;margin-top:40px;max-width:860px}
+.reet details{border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--ink-06),transparent)}
+.reet summary{cursor:pointer;list-style:none;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;font-weight:600;font-size:clamp(15px,2.2vw,18px);color:var(--cream)}
+.reet summary::-webkit-details-marker{display:none}
+.reet summary .hi{font-family:"Tiro Devanagari Hindi",serif;color:var(--gold);font-weight:400}
+.reet summary::after{content:"+";font-family:"JetBrains Mono",monospace;color:var(--saffron);font-size:22px;line-height:1;transition:transform .3s var(--ease)}
+.reet details[open] summary::after{transform:rotate(45deg)}
+.reet .body{padding:2px 22px 20px}
+.reet ul{list-style:none;display:grid;gap:10px}
+.reet li{position:relative;padding-left:20px;color:var(--ink-90);font-family:"Tiro Devanagari Hindi",serif;font-size:clamp(15px,2vw,17.5px);line-height:1.75}
+.reet li::before{content:"";position:absolute;left:2px;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--saffron)}
+.reet .sub-h{font-family:"Tiro Devanagari Hindi",serif;color:var(--saffron);margin:18px 0 8px;font-size:15.5px}
+.reet-credit{margin-top:36px;text-align:center;color:var(--ink-45);font-family:"Tiro Devanagari Hindi",serif;font-size:15px}
+.reet-credit b{color:var(--gold);font-weight:400}
+
 /* scroll-reveal utility */
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal.in{opacity:1;transform:none}
@@ -565,7 +597,9 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
   </a>
   <nav class="nav-links" aria-label="Primary">
     <a href="#about">The Jathere</a>
+    <a href="#aarti">Aarti</a>
     <a href="#gallery">Gallery</a>
+    <a href="#reet">Reet</a>
     <a href="#visit">Visit</a>
     <a class="cta" href="#contact">Contact</a>
   </nav>
@@ -644,6 +678,52 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
 
 <div class="wrap"><div class="divider"></div></div>
 
+<!-- ─── INVOCATION & AARTI ───────────────────────────────────── -->
+<section class="section" id="aarti">
+  <div class="wrap">
+    <span class="eyebrow">Invocation · <span class="dev">आह्वान</span></span>
+    <h2 class="title dev">मंत्र, स्तुति व आरती</h2>
+    <p class="lead">The sacred invocations of the Kul Devta, and the Aarti of Baba Jamu Shaheed and Sati Mata, sung before the Jathere.</p>
+
+    <div class="verses">
+      <div class="mantra full reveal">
+        <div class="om dev">ॐ</div>
+        <p class="dev">कुलानां शुभदः शान्तः सर्वदा कुलवर्धनः।<br>
+        आयुर्बलं यशो देहि कुलदेव नमोऽस्तु ते॥</p>
+      </div>
+
+      <div class="mantra reveal">
+        <div class="om dev">ॐ गणेशाय नमः</div>
+        <p class="dev">कुल देवता-ए-नमः।<br>
+        <span class="jai">॥ माता सती की जय · राजा मण्डलीक की जय ॥</span><br>
+        त्वमेव माता च पिता त्वमेव,<br>त्वमेव विद्या द्रविणं त्वमेव।<br>
+        त्वमेव सर्वं मम देव-देव॥</p>
+      </div>
+
+      <div class="mantra reveal">
+        <p class="jai dev">॥ बाबा जामू शहीद दी जय ॥</p>
+        <p class="dev">नमोः नमोः बाबा बरदानी,<br>कलयुग में हो शुभ कल्याणी।<br>
+        भोजपुर में ज्योति तुम्हारी,<br>पिण्डी रूप में हो अवतारी।<br>
+        जगे अखण्ड इक जोत तुम्हारी,<br>कलियुग में है महिमा तुम्हारी॥</p>
+      </div>
+    </div>
+
+    <h3 class="aarti-h dev">॥ आरती ॥</h3>
+    <div class="aarti">
+      <p class="couplet dev">जै जामूं शहीद बाबा, जै जै सती माता।<br>हाथ जोड़ तेरे आगे, आरती मैं गाता॥</p>
+      <p class="couplet dev">मन्दिर के अन्दर विराजे, मूरतियां प्यारी।<br>झण्डा झूले मन्दिर, ज्योति जगे न्यारी॥</p>
+      <p class="couplet dev">सुन्दर भवन तुम्हारा, मन को अति भावे।<br>बार-बार देखन को, बाबा मन ललचावे॥</p>
+      <p class="couplet dev">भवन पे झण्डे झूलें, ढोल ध्वनि बाजे।<br>ऊंचा भवन तुम्हारा, बाबा प्रिय लागे॥</p>
+      <p class="couplet dev">धूप, दीप, मिष्ठान लिए, भेंट पुष्प मेवा।<br>दास खड़े चरणों में, दर्शन दो देवा॥</p>
+      <p class="couplet dev">प्रथम आपको पूजत, शुभ मंगल दाता।<br>सिद्ध होय सब कारज, दरिद्र हट जाता॥</p>
+      <p class="couplet dev">जो जन निश्चय कर, द्वार तेरे आवे।<br>उसकी इच्छा पूर्ण, बाबा हो जावे॥</p>
+      <p class="couplet dev">इतनी स्तुति निश्चित, जो नर गावे।<br>कहते सेवक तेरे, सुख सम्पत्ति पावें॥</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
 <!-- ─── GALLERY ──────────────────────────────────────────────── -->
 <section class="section" id="gallery">
   <div class="wrap">
@@ -672,6 +752,141 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
     <p class="lb-cap" id="lbCap"></p>
   </div>
 </div>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ─── KUL REET (CUSTOMS & RITES) ───────────────────────────── -->
+<section class="section" id="reet">
+  <div class="wrap">
+    <span class="eyebrow">Sacred Observances · <span class="dev">कुल रीति</span></span>
+    <h2 class="title dev">जौहल वंश की रीति-रिवाज व संस्कार</h2>
+    <p class="reet-intro">The traditional observances (kul-reet) and life-rites of the Johal Vansh, recorded for the family. Tap each to open.</p>
+
+    <div class="reet">
+      <details open>
+        <summary><span><span class="hi">मनाही</span> · Observances to keep</span></summary>
+        <div class="body"><ul>
+          <li>शगुन डालना वर्जित है।</li>
+          <li>सरहिं के पेड़ से दूरी (छिन्ना) बनाए रखना।</li>
+          <li>कांच की चूड़ी पहनना मना है।</li>
+          <li>कंगन, चांदी का हार (सीरा) पहनना मना है।</li>
+          <li>लड़के की शादी से पहले उसको रंगदार दातुन, सुरमा और मेहंदी लगाना मना है।</li>
+          <li>जहां तक हो सके घरेलू कार्य हेतु नौकर रखना मना है।</li>
+          <li>भूरे रंग की भैंस रखना मना है।</li>
+          <li>कपड़ों को नील नहीं लगाना है।</li>
+          <li>नीले रंग के कपड़े पहनना मना है।</li>
+          <li>ऐतवार को केश काटना, दाढ़ी बनाना, नाखुन काटना, सिर व कपड़े धोना मना है।</li>
+          <li>बच्चे के जन्म संस्कार (धमान) करने तक घर का कपड़ा, कंघी, शैम्पू, साबुन और धागा लगाना मना है।</li>
+        </ul></div>
+      </details>
+
+      <details>
+        <summary><span><span class="hi">जन्म संस्कार</span> · Birth rites</span></summary>
+        <div class="body"><ul>
+          <li>लड़के का जन्म हो तो 12 दिन तक एक छत के नीचे सोना और तारों की छांव में बाहर निकलना चाहिए।</li>
+          <li>लड़की हो तो 7 दिन एक छत के नीचे सोना चाहिए।</li>
+          <li>बच्चा हॉस्पिटल में पैदा होता है तो वो दिन बीच में गिन लेना और घर आ कर नीचे सोना चाहिए।</li>
+          <li>जब चारपाई पर चढ़ना हो तो दातुन, सुरमा चारपाई पर रख लें और कन्जक चारपाई पर चढ़ा देती है।</li>
+          <li>पहला दूध 3 बूंद मकोड़े को डालना, फिर थो कर बच्चे को पिलाना चाहिए।</li>
+        </ul></div>
+      </details>
+
+      <details>
+        <summary><span><span class="hi">कढ़ाई</span> · सिंदकादी कदार</span></summary>
+        <div class="body"><ul>
+          <li>बच्चे के जन्म के 12 दिन बाद कढ़ाई करनी चाहिए।</li>
+          <li>कनक को भून कर पीस लें और गुड़ की चाशनी बना कर उसमें कढ़ाई करनी चाहिए।</li>
+          <li>लड़के की कढ़ाई 5 पड़ोपी और लड़की की 2.5 पड़ोपी करनी चाहिए।</li>
+        </ul></div>
+      </details>
+
+      <details>
+        <summary><span><span class="hi">धमान</span></span></summary>
+        <div class="body"><ul>
+          <li>3 महीने तक धमान कर लेने चाहिए।</li>
+          <li>लड़के की कढ़ाई 2.5 टोपे, लड़की की 5 पड़ोपी करनी चाहिए।</li>
+          <li>2 पुलके, बेल कर अन्दर घी लगा कर उन्हें आपस में जोड़ कर द्रोपड़े बनानी चाहिए।</li>
+          <li>21 जोड़ द्रोपड़ बनानी होती है – 3, 5, 7 और 9 की।</li>
+        </ul></div>
+      </details>
+
+      <details>
+        <summary><span><span class="hi">मुँडन</span></span></summary>
+        <div class="body"><ul>
+          <li>2.5 टोपे की कढ़ाई करनी चाहिए।</li>
+          <li>अपनी जाति के 2 शादी-शुदा और 1 कुंवारा – यानि 2.5 जाखी बिठाएं।</li>
+          <li>5 छटांक घी और 2.5 गज कपड़ा नेज मिन्ने के लिए।</li>
+          <li>7 टोपे अनाज निकालिये – 4 सीधे, 3 उल्टे।</li>
+          <li>चौका फेर कर श्रद्धा अनुसार तड़ी का आटा निकाल लें।</li>
+          <li>धूप दीया जला कर सिंदूर लगा कर बकार लगाएं।</li>
+          <li>आषाढ़ महीने की चौहदी को बकार काटें।</li>
+          <li>2 बकरे होंगे – 1 कुल देवता का, दूसरा राजा मण्डलीक का।</li>
+          <li>बकार अन्दर ही बनाना और अन्दर ही खाना है।</li>
+          <li>अगर मांस बच जाता है या खाल वगैरह जो कुछ भी होता है सब अन्दर ही गाढ़ दें।</li>
+          <li>जब तक मुंडन न हो तब तक मां और बच्चा मांस न खाएं।</li>
+          <li>जब बकरा काटना है तब पहले मां चखे, बाद में और लोग खाएं।</li>
+          <li>जाखी खाते वक्त कोई भी बात न करे – इशारे से सब कुछ मांगें। यहां तक संभव हो सके परिवार का बड़ा सदस्य ही सब कार्य सम्पन्न करें।</li>
+        </ul></div>
+      </details>
+
+      <details>
+        <summary><span><span class="hi">विवाह</span> · Marriage</span></summary>
+        <div class="body">
+          <div class="sub-h">विवाह (लड़का)</div>
+          <ul>
+            <li>लड़के की शादी में 2.5 जाखी बिठाने चाहिए।</li>
+            <li>2.5 मीटर कपड़ा नेज मिने के लिए।</li>
+            <li>7 टोपे अनाज सीधे-उल्टे।</li>
+            <li>2.5 टोपे की कढ़ाई करना।</li>
+            <li>1 बकरा देना चाहिए।</li>
+          </ul>
+          <div class="sub-h">विवाह (लड़की)</div>
+          <ul>
+            <li>लड़की की शादी में 5 पड़ोपी कढ़ाई करनी चाहिए।</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary><span><span class="hi">जोड़ फिरना व रीती</span></span></summary>
+        <div class="body">
+          <div class="sub-h">जोड़ फिरना</div>
+          <ul>
+            <li>चिल्लायां, मरूडे, खिचड़ी बनाना और व्योर देना।</li>
+          </ul>
+          <div class="sub-h">रीती</div>
+          <ul>
+            <li>21 जोड़ द्रोपड़ बनाने चाहिए।</li>
+            <li>2.5 टोपे की कढ़ाई करना।</li>
+            <li>5 पड़ोपी के मर्सडे बनाने चाहिए।</li>
+            <li>अपनी जाति की 7 सोआनियां बिठानी चाहिए।</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary><span><span class="hi">सूर्यन</span></span></summary>
+        <div class="body"><ul>
+          <li>अगर कोई सुखन या गुनाहगारी का बकरा देता है तो उसे बाहर बनाया और बाहर खाया जा सकता है।</li>
+        </ul></div>
+      </details>
+
+      <details>
+        <summary><span><span class="hi">सुच चुकाना</span></span></summary>
+        <div class="body"><ul>
+          <li>महीने में 6 सुच्चे आते हैं – 1 मसस्या (अमावस), 1 अटठयां और 4 ऐतवार के।</li>
+          <li>तीसरे दिन कट्टे-कट्टी की रस्सी डालनी चाहिए।</li>
+          <li>तीसरे दिन दूध के साथ अन्न मेला करना चाहिए। उसके बाद आप खीर बना सकते हैं।</li>
+          <li>चौदही को जागेर (खट्टा) लगाना और मसस्या को दही खाना चाहिए।</li>
+          <li>अटठयां को दही जमा कर 3 दिन लस्सी बनानी चाहिए।</li>
+          <li>तीसरे दिन चौकां फेर कर दिया जला कर गौदरी बनानी और लस्सी, घी, दही – सब कुछ उसी में डालना। खीर बना कर रखनी और चूटी दे कर सुच चुका देनी चाहिए।</li>
+        </ul></div>
+      </details>
+    </div>
+
+    <p class="reet-credit dev">॥ इति कुलदेवतायेः कार सम्पन्नम् ॥<br>निर्देशक : <b>कृष्ण लाल जौहल, चंद्रचक्क</b></p>
+  </div>
+</section>
 
 <div class="wrap"><div class="divider"></div></div>
 
