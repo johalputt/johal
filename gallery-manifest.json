@@ -1,0 +1,20 @@
+{
+  "_README": "Add your own photos & videos here. Put image files in the /gallery/ folder, then list them under 'images'. For videos, paste a YouTube link or ID under 'videos'. Remove the example entries below once you add real ones. After editing: git add . && git commit -m 'update gallery' && git push",
+
+  "images": [
+  ],
+
+  "videos": [
+  ],
+
+  "_examples": {
+    "images": [
+      { "src": "gallery/aarti.jpg",     "thumb": "gallery/aarti.jpg",    "caption": "Evening Aarti at the Jathere" },
+      { "src": "gallery/shrine.jpg",    "caption": "The ancestral shrine" },
+      { "src": "gallery/gathering.jpg", "caption": "Annual clan gathering" }
+    ],
+    "videos": [
+      { "youtube": "dQw4w9WgXcQ", "caption": "Annual Puja ceremony" }
+    ]
+  }
+}
