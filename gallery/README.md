@@ -1,33 +1,33 @@
-# Sacred Gallery — drop your photos here
+# Sacred Gallery — just upload your files here
 
-Place your shrine photos in **this `/gallery/` folder**, then list them in
-[`../gallery-manifest.json`](../gallery-manifest.json).
+Whatever you put in **this `gallery/` folder shows up on the website
+automatically** — no Google account, no API key, nothing to configure.
+The site reads this folder directly from GitHub.
 
-## How to add a photo
+## Add photos or videos (easiest — in your browser)
 
-1. Copy your image (e.g. `aarti.jpg`) into this folder.
-2. Open `gallery-manifest.json` (one level up) and add an entry under `"images"`:
+1. On GitHub, open this `gallery/` folder.
+2. Click **Add file → Upload files**.
+3. Drag in your files:
+   - **Images:** `.jpg` `.jpeg` `.png` `.webp` `.gif` `.avif`
+   - **Videos:** `.mp4` `.webm` `.mov` `.m4v` `.ogv`
+4. Click **Commit changes**.
 
-   ```json
-   "images": [
-     { "src": "gallery/aarti.jpg", "caption": "Evening Aarti at the Jathere" }
-   ]
-   ```
+Within about a minute they appear in the **Sacred Gallery**, lazy-loaded,
+with a click-to-open lightbox. Local videos play right inside the page.
 
-3. Save, then publish:
+## Ordering & captions
 
-   ```bash
-   git add .
-   git commit -m "Add gallery photos"
-   git push
-   ```
+- Files are shown sorted by name. To control the order, prefix names with
+  numbers: `01-aarti.jpg`, `02-shrine.jpg`, `03-gathering.jpg` …
+  (the number is hidden in the caption).
+- Captions are auto-made from the file name (`01-evening-aarti.jpg` →
+  **"Evening Aarti"**). For a custom caption, add it to
+  [`../gallery-manifest.json`](../gallery-manifest.json) under `"captions"`.
 
-GitHub Pages rebuilds automatically in about a minute and the photos
-appear in the **Sacred Gallery** section, lazy-loaded with a lightbox.
+## YouTube videos
 
-## Adding videos
-
-Under `"videos"` in the manifest, paste a YouTube link or ID:
+Add YouTube links in `../gallery-manifest.json` under `"videos"`:
 
 ```json
 "videos": [
@@ -35,11 +35,15 @@ Under `"videos"` in the manifest, paste a YouTube link or ID:
 ]
 ```
 
-## Automatic Google Maps photos (optional)
+## Adding files from your computer (instead of the website)
 
-If you add a Google Places API key in [`../config.js`](../config.js),
-photos uploaded to the shrine's Google Maps listing will appear here
-automatically — no manual steps needed.
+```bash
+# copy your images/videos into this gallery/ folder, then:
+git add .
+git commit -m "Add gallery photos"
+git push
+```
 
-> Tip: keep each image under ~400 KB for the fastest mobile loading.
-> A good size is 1600px on the longest edge.
+> Tips: keep photos under ~400 KB (≈1600px on the long edge) and videos
+> short/compressed for fast mobile loading. Social-share images live in
+> `../assets/`, not here, so they never appear in the gallery.
