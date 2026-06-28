@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#07080f" />
 
+<!-- preload the first hero photograph for a fast first paint -->
+<link rel="preload" as="image" href="assets/hero-1.jpg" fetchpriority="high" />
+
 <title>जोहल वंश जठेरे · Johal Vansh Jathere — Ancestral Kul Devta Shrine</title>
 
 <!-- ════════════════════════════════════════════════════════════════
@@ -208,6 +211,31 @@ header.nav.scrolled{
 .hero{
   min-height:100svh;display:grid;align-items:center;position:relative;
   padding-block:120px 80px;overflow:hidden;isolation:isolate;
+}
+/* Hero background photographs — slow cinematic crossfade + gentle zoom,
+   with a dark scrim so the headline stays legible. Upload the files
+   assets/hero-1.jpg and assets/hero-2.jpg; if they are absent the
+   original dark hero simply shows through (graceful fallback). */
+.hero-bg{position:absolute;inset:0;z-index:-4;overflow:hidden}
+.hero-photo{
+  position:absolute;inset:0;background-size:cover;background-position:center 38%;
+  background-repeat:no-repeat;opacity:0;will-change:opacity,transform;
+  animation:heroFade 18s infinite;
+}
+.hero-photo.p1{background-image:url("assets/hero-1.jpg")}
+.hero-photo.p2{background-image:url("assets/hero-2.jpg");animation-delay:9s}
+@keyframes heroFade{
+  0%{opacity:0;transform:scale(1.05)}
+  5%{opacity:1}
+  44%{opacity:1}
+  50%{opacity:0;transform:scale(1.11)}
+  100%{opacity:0;transform:scale(1.11)}
+}
+.hero-scrim{
+  position:absolute;inset:0;z-index:-3;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(7,8,15,.88) 0%,rgba(7,8,15,.60) 42%,rgba(7,8,15,.32) 100%),
+    linear-gradient(180deg,rgba(7,8,15,.34) 0%,transparent 30%,rgba(7,8,15,.55) 74%,var(--charcoal) 100%);
 }
 /* layered divine light + grain, pure CSS, GPU-cheap */
 .hero::before{
@@ -492,6 +520,8 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
 @media (prefers-reduced-motion:reduce){
   .reveal,.card{opacity:1!important;transform:none!important}
   .beam,.particles i,footer .om{animation:none!important}
+  .hero-photo{animation:none!important;transform:none!important}
+  .hero-photo.p1{opacity:1!important}.hero-photo.p2{opacity:0!important}
   .invocation,.hero h1 .hi,.hero h1 .en,.hero .sub,.cta-row,.stats,.scroll-cue{opacity:1!important;animation:none!important}
 }
 </style>
@@ -551,6 +581,11 @@ footer .om{font-family:"Tiro Devanagari Hindi",serif;font-size:30px;color:var(--
 
 <!-- ─── HERO ─────────────────────────────────────────────────── -->
 <section class="hero" role="banner">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-photo p1"></div>
+    <div class="hero-photo p2"></div>
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
   <div class="beam" aria-hidden="true"></div>
   <div class="particles" id="particles" aria-hidden="true"></div>
   <div class="wrap hero-inner">
