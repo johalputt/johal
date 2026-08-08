@@ -1,86 +1,57 @@
-# Go-Live Checklist — Johal Vansh Jathere
+# Deploying Johal Vansh Jathere
 
-This repository (`johalputt/johal`) is published with **GitHub Pages**, so it
-is served at **`johalputt.github.io`** and the canonical custom domain is
-**`jathere.johal.in`**. The `kuldevta.` and `devsthan.` subdomains
-301-redirect to the canonical one.
+**This repository is no longer published by GitHub Pages.**
+`jathere.johal.in` is served from a VayuPress install as an uploaded custom
+website. `.github/workflows/deploy.yml` and `CNAME` have been removed, and Pages
+is turned off in the repository settings.
 
----
+Removing the workflow is the part that matters. It carried `enablement: true`,
+which turns Pages **back on by itself** the first time it runs — so leaving the
+file in place would have re-enabled Pages on the next push to `main`, whatever
+the settings said.
 
-## 1. Merge to `main`
-Merge the open pull request into the `main` branch.
-
-## 2. Turn on GitHub Pages
-Repo → **Settings → Pages → Build and deployment**
-- **Source: GitHub Actions** (matches the included `.github/workflows/deploy.yml`)
-- The first deploy runs automatically on merge — watch it under the **Actions** tab.
-
-> Prefer no workflow? Choose **Deploy from a branch → `main` / `root`** instead,
-> and delete `.github/workflows/deploy.yml`. Either approach works.
-
-## 3. Add the DNS records
-At your DNS provider for `johal.in`, add three **CNAME** records:
-
-| Type  | Host / Name | Value (Points to)      | TTL  |
-|-------|-------------|------------------------|------|
-| CNAME | `jathere`   | `johalputt.github.io.` | 3600 |
-| CNAME | `kuldevta`  | `johalputt.github.io.` | 3600 |
-| CNAME | `devsthan`  | `johalputt.github.io.` | 3600 |
-
-- Enter only the label (`jathere`), not the full domain — the provider appends `.johal.in`.
-- The `CNAME` file in this repo already pins the canonical domain to
-  `jathere.johal.in`, so `kuldevta` and `devsthan` redirect there automatically.
-- **Cloudflare users:** set each record to **DNS only (grey cloud)** until the
-  TLS certificate is issued; SSL mode **Full**.
-
-## 4. Set the custom domain in GitHub
-Settings → Pages → **Custom domain** → enter `jathere.johal.in` → **Save**.
-(It auto-fills from the `CNAME` file once Pages builds; just confirm it is there.)
-
-## 5. Enforce HTTPS
-Once GitHub finishes domain verification (minutes up to ~1 hour), tick
-**Enforce HTTPS**. Re-enable the Cloudflare proxy afterward if you wish.
-
-## 6. Verify
-
-```bash
-dig jathere.johal.in +short                              # -> johalputt.github.io + GitHub IPs
-curl -sI https://kuldevta.johal.in | grep -i location    # -> 301 to jathere.johal.in
-```
-
-In a browser, confirm:
-- `https://jathere.johal.in` loads the site
-- `https://kuldevta.johal.in` and `https://devsthan.johal.in` redirect to it
-- `https://jathere.johal.in/some-typo` shows the branded 404 page
-
-## 7. Post-launch (optional, recommended)
-- **Social previews:** test the URL in the
-  [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) and the
-  [X Card Validator](https://cards-dev.twitter.com/validator).
-- **Search:** add the site to
-  [Google Search Console](https://search.google.com/search-console) and submit
-  `https://jathere.johal.in/sitemap.xml`.
-- **Gallery:** add photos to `/gallery/` and list them in
-  `gallery-manifest.json` (or add a Google Places API key in `config.js` —
-  see instructions inside that file).
+This repository stays as the source and the history of the site.
 
 ---
 
-## Common gotchas
-- **No CNAME on the apex:** do not add a CNAME record for the root `johal.in` —
-  these are subdomains only.
-- **Certificate "not yet provisioned":** wait; it can take up to an hour after
-  DNS resolves. Avoid toggling the custom domain repeatedly.
-- **404 right after enabling:** DNS propagation — give it time, then hard-refresh.
+## Publishing a change
 
----
+1. Edit the files here and commit.
+2. Build or assemble the bundle you want to serve.
+3. VayuOS → `jathere.johal.in` → **Website** → upload the zip.
+4. Hard-refresh the browser afterwards; the old bundle is cached.
 
-## Updating the site later
+A commit alone changes nothing that visitors see. There is no longer any
+pipeline watching this branch.
 
-```bash
-git add .
-git commit -m "Update content"
-git push
-```
+## What an install will not run
 
-GitHub Pages rebuilds automatically within about a minute.
+A VayuPress hosted domain serves every response under a strict
+Content-Security-Policy. Relative to GitHub Pages, that removes four things this
+site was originally written to use, so a straight copy of this tree does not
+work unchanged:
+
+- **The Google Fonts stylesheet and every face behind it.** `font-src 'self'`
+  refuses both; the faces have to be served from the bundle itself.
+- **The one inline `<style>` block.** `style-src 'self'` refuses it; it has to
+  become a file, linked at the same position so the cascade is unchanged.
+- **The inline `<script>` that drives the whole page.** `script-src 'self'`
+  refuses it; same treatment, linked in place so execution order holds.
+- **The YouTube and Google Maps `<iframe>`s.** The policy sets no `frame-src`,
+  so `default-src 'self'` refuses them outright, and there is no per-domain
+  opt-in for frames. A link that opens the thing beats an empty box.
+
+The gallery is a fifth. `config.js` points it at the GitHub contents API, and
+`connect-src 'self'` refuses that call — the gallery would simply render empty,
+with nothing on screen to say why.
+
+None of this is a defect in the install. It is the same policy that makes an
+uploaded site unable to exfiltrate anything, and it applies to a zip upload
+exactly as it applies to anything else.
+
+## The subdomains
+
+`kuldevta.johal.in` and `devsthan.johal.in` 301-redirect to the canonical
+`jathere.johal.in`. `robots.txt` and the `<link rel="canonical">` in
+`index.html` both reinforce that, so there is no duplicate content to crawl.
+Those redirects are configured on the server, not here.
